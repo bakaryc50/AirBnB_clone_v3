@@ -5,9 +5,9 @@ Contains the TestUserDocs classes
 
 from datetime import datetime
 import inspect
-import models
 from models import user
 from models.base_model import BaseModel
+import os
 import pep8
 import unittest
 User = user.User
@@ -67,41 +67,37 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(user, "created_at"))
         self.assertTrue(hasattr(user, "updated_at"))
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_email_attr(self):
         """Test that User has attr email, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "email"))
-        if models.storage_t == 'db':
-            self.assertEqual(user.email, None)
-        else:
-            self.assertEqual(user.email, "")
+        self.assertEqual(user.email, "")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_password_attr(self):
         """Test that User has attr password, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "password"))
-        if models.storage_t == 'db':
-            self.assertEqual(user.password, None)
-        else:
-            self.assertEqual(user.password, "")
+        self.assertEqual(user.password, "")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "first_name"))
-        if models.storage_t == 'db':
-            self.assertEqual(user.first_name, None)
-        else:
-            self.assertEqual(user.first_name, "")
+        self.assertEqual(user.first_name, "")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_last_name_attr(self):
         """Test that User has attr last_name, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "last_name"))
-        if models.storage_t == 'db':
-            self.assertEqual(user.last_name, None)
-        else:
-            self.assertEqual(user.last_name, "")
+        self.assertEqual(user.last_name, "")
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
